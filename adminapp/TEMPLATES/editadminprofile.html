@@ -1,0 +1,100 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+       <div class="col-lg-4 text-center">
+          <div class="iq-card">
+             <div class="iq-card-body">
+                <form>
+                   <div class="form-group">
+                      <div class="add-img-user profile-img-edit">
+                         <img class="profile-pic img-fluid" src="/adminapp/media/{{profile.photo}}" alt="profile-pic">
+                      </div>
+                   </div>
+                   <div class="form-group">
+                      <!-- <label for="exampleFormControlFile1">Change Profile Pic</label>
+                      <input type="file" class="form-control-file" id="photo"> -->
+                      <label for="exampleFormControlFile1">Change Profile Pic</label>
+                      <input type="file" class="form-control-file" id="photo" required>
+                   </div>
+                </form>
+             </div>
+          </div>
+       </div>
+
+       
+       <div class="col-lg-8">
+          <div class="iq-card">
+             <div class="iq-card-header d-flex justify-content-between">
+                <div class="iq-header-title">
+                   <h4 class="card-title">Edit Profile</h4>
+                </div>
+             </div>
+             <div class="iq-card-body">
+                <div class="about-info m-0 p-0">
+                   <div class="row">
+                      <div class="form-group col-sm-4">
+                         <label for="fname">User Name:</label>
+                         <input type="text" class="form-control" id="name" value="{{user.username}}">
+                      </div>
+                      <div class="form-group col-sm-4">
+                         <label for="lname">New Password:</label>
+                         <input type="password" class="form-control" id="npassword" value="{{user.password }}">
+                      </div>
+                      <div class="form-group col-sm-4">
+                         <label for="uname">Confirm Password:</label>
+                         <input type="password" class="form-control" id="cpassword" value="{{user.password}}">
+                      </div>
+                      <div class="form-group col-sm-4">
+                         <label for="uname">Phone number:</label>
+                         <input type="text" class="form-control" id="mobile" value="{{profile.mobile }}">
+                      </div>
+                      <div class="form-group col-sm-4">
+                         <label for="uname">Email ID:</label>
+                         <input type="text" class="form-control" id="email" value="{{profile.email}}">
+                      </div>
+                      <div class="form-group col-sm-6">
+                         <button type="button" class="btn btn-primary mr-2" onclick="update()">Update</button>
+                         <button type="reset" class="btn iq-bg-danger">cancel</button>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <script>
+    function update(){
+      // newpassword= document.getElementById('npassword').value;
+      // cpassword=document.getElementById('cpassword').value;
+      // if (newpassword != cpassword){
+      //    alert("Password mismatch")
+      // }
+         $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+  var data= new FormData()
+  data.append("photo",$("input[id^='photo']")[0].files[0]);
+  data.append("name",$('#name').val());
+  data.append("npass",$('#npassword').val());
+  data.append("cpass",$('#cpassword').val());
+  data.append("mobile",$('#mobile').val());
+  data.append("email",$('#email').val());
+ $.ajax({
+   url:'/adminapp/editadminprofile/',
+   type:'POST',
+   enctype: 'multipart/form-data',
+   contentType: false,
+   processData: false,
+   data: data,
+   success:function(response){
+      alert(response.msg)
+      location.reload(true)
+               }
+ })
+      
+    }
+ </script>
+{% endblock %}

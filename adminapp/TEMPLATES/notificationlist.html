@@ -1,0 +1,42 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid" style="padding-top: 50px;">
+    <div class="row">
+       <div class="col-lg-12">
+          <div class="iq-card">
+             <div class="iq-card-header d-flex justify-content-between">
+                <div class="col-md-6">
+                   <div class="iq-header-title">
+                      <h4 class="card-title">Notifications</h4>
+                   </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="iq-header-title" style="float:right;">
+                      <a href="/adminapp/addnotification/" class="btn btn-sm iq-bg-success"><b><i class="ri-add-fill"></i><span class="pl-1" style="float: right;">Add</b></span></a>
+                   </div>
+                </div>
+             </div>
+             {% for i in notify %}
+             <div class="iq-card-body">
+                <div class="new-user-info">
+                   <div class="row">
+                      <div class="col-md-12 alert alert-primary " role="alert">
+                         <div class="iq-alert-icon">
+                            <i class="ri-notification-2-fill"></i>
+                         </div>
+                         <div class="iq-alert-text">{{i.notify}}</div>
+                         <div class="iq-alert-icon">
+                            <a href="/adminapp/delnotification/{{i.id}}"><i class="ri-close-circle-fill"></i></a>
+                         </div>
+                      </div>       
+                   </div> 
+                </div>
+             </div>
+             {% endfor %}
+          </div>
+       </div>
+       <div class="col-lg-2"></div>
+    </div>
+ </div>
+{% endblock %}

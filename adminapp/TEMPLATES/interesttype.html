@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<div class="div" style="padding-top:50px;padding-left:50px;">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+           <div class="iq-card">
+              <div class="iq-card-header d-flex justify-content-between">
+                 <div class="iq-header-title">
+                    <h4 class="card-title">Interest Type</h4>
+                 </div>
+              </div>
+              <div class="iq-card-body">
+                 <div class="new-user-info">
+                    <form>
+                       <div class="row">
+                          <div class="form-group col-md-12">
+                             <label for="cname">Interest Type:</label>
+                             <input type="text" class="form-control" id="intype" placeholder="Interest Type" required>
+                          </div>
+                          <div class="form-group col-md-12">
+                             <button type="submit" class="btn btn-primary" onclick="submits()">Submit</button>
+                          </div>
+                    </form>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <div class="col-lg-2"></div>
+     </div>
+</div>
+<script>
+    function submits(){
+        $.ajaxSetup({
+ headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+$.ajax({
+    url: '/adminapp/interest/',
+    method:'POST',
+    data:{
+        intype: $('#intype').val()
+    },
+    success: function(response){
+     alert(response.msg)
+      location.reload(true)
+    }
+})
+    }
+</script>
+{% endblock %}

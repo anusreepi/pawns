@@ -1,0 +1,251 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="iq-card">
+            <div class="iq-card-body p-0">
+               <div class="iq-edit-list">
+                  <ul class="iq-edit-profile d-flex nav nav-pills">
+                     <li class="col-md-3 p-0">
+                        <a class="nav-link active text-center" data-toggle="pill" href="#personal-information">
+                        Personal Information
+                        </a>
+                     </li>
+                     
+                     <li class="col-md-3 p-0">
+                        <a class="nav-link text-center" data-toggle="pill" href="#emailandsms">
+                        Email and Phone
+                        </a>
+                     </li>
+                     
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
+         <div class="iq-edit-list-data">
+            <div class="tab-content">
+               <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Personal Information</h4>
+                        </div>
+                     </div>
+
+                     <div class="iq-card-body">
+                        <form>
+                           <div class="form-group row align-items-center">
+                              <div class="col-md-12">
+                                 <div class="profile-img-edit">
+                                    <img class="profile-pic" src="/adminapp/media/{{updata.photo}}" alt="profile-pic">
+                                    <div class="p-image">
+                                       <i class="ri-pencil-line upload-button"></i>
+                                       <input class="file-upload" type="file" accept="image/*">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleFormControlFile1">Edit Photo</label>
+                              <input type="file" class="form-control-file" id="photo" required>
+                           </div> 
+                           <div class=" row align-items-center">
+                              <div class="form-group col-sm-12">
+                                 
+                                 <input type="text" class="form-control" id="id" value="{{updata.id}}" hidden>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                 <label for="fname">First Name:</label>
+                                 <input type="text" class="form-control" id="fname" value="{{updata.firstname}}">
+                              </div>
+                              <div class="form-group col-sm-6">
+                                 <label for="lname">Last Name:</label>
+                                 <input type="text" class="form-control" id="lname" value="{{updata.lastname}}">
+                              </div>
+                              <!-- <div class="form-group col-sm-6">
+                                 <label for="uname">Email:</label>
+                                 <input type="text" class="form-control" id="email" value="{{updata.email}}">
+                              </div> -->
+                              
+                              <!-- <div class="form-group col-sm-6">
+                                 <label class="d-block">Gender:</label>
+                                 <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadio6" name="customRadio1" class="custom-control-input" checked="">
+                                    <label class="custom-control-label" for="customRadio6"> Male </label>
+                                 </div>
+                                 <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="customRadio7" name="customRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio7"> Female </label>
+                                 </div>
+                              </div> -->
+                              <div class="form-group col-sm-6">
+                                 <label>Gender:</label>
+                                 <select class="form-control" id="gender">
+                                    <option >{{updata.gender}}</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Others</option>
+                                 </select>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                 <label for="dob">Date Of Birth:</label>
+                                 <input  class="form-control" id="dob" value="{{updata.dob}}">
+                              </div>     
+                              <div class="form-group col-sm-6">
+                                 <label for="dob">Address 1:</label>
+                                 <input  class="form-control" id="add1" value="{{updata.address1}}">
+                              </div> 
+                              <div class="form-group col-sm-6">
+                                 <label for="dob">Address 2:</label>
+                                 <input  class="form-control" id="add2" value="{{updata.address2}}">
+                              </div>                                  
+                             
+                              <!-- <div class="form-group col-sm-6">
+                                 <label>State:</label>
+                                 <select class="form-control" id="exampleFormControlSelect4">
+                                    <option>California</option>
+                                    <option>Florida</option>
+                                    <option selected="">Georgia</option>
+                                    <option>Connecticut</option>
+                                    <option>Louisiana</option>
+                                 </select>
+                              </div> -->
+                              <div class="form-group col-sm-6">
+                                 <label for="cname">City:</label>
+                                 <input type="text" class="form-control" id="city" value="{{updata.city}}">
+                              </div>
+                              <div class="form-group col-sm-6">
+                                 <label for="dob">State:</label>
+                                 <input  class="form-control" id="state" value="{{updata.state}}">
+                              </div>
+                              <!-- <div class="form-group col-sm-12">
+                                 <label>Address:</label>
+                                 <textarea class="form-control" name="address" rows="5" style="line-height: 22px;">
+                                    {{updata.address1}},{{updata.address2}}
+                                 </textarea>
+                              </div> -->
+                              <div class="form-group col-sm-6">
+                                 <label>Country:</label>
+                                 <select class="form-control" id="country">
+                                    <option >{{updata.country}}</option>
+                                    <option>Caneda</option>
+                                    <option>Noida</option>
+                                    <option >USA</option>
+                                    <option>India</option>
+                                    <option>Africa</option>
+                                 </select>
+                              </div>
+                           <div class="form-group col-sm-6">
+                              <label for="cname">Pincode:</label>
+                              <input type="text" class="form-control" id="pincode" value="{{updata.pincode}}">
+                           </div>
+                           <!-- <div class="form-group col-sm-6">
+                              <label for="">Id Proof</label>
+                              <input type="file" class="form-control-file" id="idproof">
+                           </div> -->
+                           <div class="form-group col-sm-12" >
+                              <label  for="customFile">ID Proof:</label>
+                              <div class="custom-file" >
+                                 <label class="custom-file-label" for="customFile">ID Proof</label>
+                                 <input type="file" class="custom-file-input" id="idproof" value="{{updata.idproof}}">
+                                 
+                              </div>
+                           </div>
+                           <button type="button" class="btn btn-primary mr-2" onclick="personalupdate()">Update</button>
+                           <button type="reset" class="btn iq-bg-danger">cancel</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="tab-pane fade" id="emailandsms" role="tabpanel">
+                  <div class="iq-card">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Email and Phone Number</h4>
+                        </div>
+                     </div>
+                     <div class="iq-card-body">
+                        <form>
+                           <div class="form-group">
+                              <label for="cno">Mobile Number:</label>
+                              <input type="text" class="form-control" id="mobile" value="{{updata.mobile}}">
+                           </div>
+                           <div class="form-group">
+                              <label for="email">Email:</label>
+                              <input type="text" class="form-control" id="email" value="{{updata.email}}">
+                           </div>
+                           
+                           <button type="button" class="btn btn-primary mr-2" onclick="contactupdate()">Update</button>
+                           <button type="reset" class="btn iq-bg-danger">cancel</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+
+    function personalupdate(){
+           
+           $.ajaxSetup({
+ headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+var data= new FormData()
+  
+  data.append("photo",$("input[id^='photo']")[0].files[0]);
+  data.append("idproof",$("input[id^='idproof']")[0].files[0]);
+  data.append("id",$('#id').val());
+  data.append("name",$('#fname').val());
+  data.append("lname",$('#lname').val());
+  data.append("add1",$('#add1').val());
+  data.append("add2",$('#add2').val());
+  data.append("city",$('#city').val());
+  data.append("state",$('#state').val());
+  data.append("country",$('#country').val());
+  data.append("pincode",$('#pincode').val());
+  data.append("dob",$('#dob').val());
+  data.append("gender",$('#gender').val());
+//   data.append("gender",$("input[name='gender']").val());
+           $.ajax({
+               url:'/adminapp/personalupdate/',
+               type:'POST',
+               enctype: 'multipart/form-data',
+               contentType: false,
+               processData: false,
+               data:data,
+               success:function(response){
+                 alert(response.msg)
+                 location.reload(true)
+               }
+           })
+       }
+   function contactupdate(){
+      $.ajaxSetup({
+ headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+        $.ajax({
+               url:'/adminapp/contactupdate/',
+               type:'POST',
+               data:{
+                 id:$('#id').val(),
+                 email: $('#email').val(),
+                 mobile: $('#mobile').val() 
+               },
+               success:function(response){
+                 alert(response.msg)
+                 location.reload(true)
+               }
+           })
+   }
+</script>
+ {% endblock %}

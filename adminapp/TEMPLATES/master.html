@@ -1,0 +1,215 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+<script>
+   window.onload=function(){
+       loaditemgroup()
+       loaditems()
+   }
+</script>
+ <div class="col-lg-6">
+    <div class="iq-card">
+       <div class="iq-card-header d-flex justify-content-between">
+          <div class="iq-header-title">
+             <h4 class="card-title">Item Group</h4>
+          </div>
+       </div>
+       <div class="iq-card-body">
+          <form>
+             <div class="form-group">
+                <label for="cname">Item Group:</label>
+                <input type="text" class="form-control" id="igroup" placeholder="Item Group">
+             </div> 
+             <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="additemgroup()">Submit</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
+ <div class="col-lg-6">
+    <div class="iq-card">
+       <div class="iq-card-header d-flex justify-content-between">
+          <div class="iq-header-title">
+             <h4 class="card-title">Item Name</h4>
+          </div>
+       </div>
+       <div class="iq-card-body">
+          <form>
+             <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Item Group</label>
+                <select class="form-control" id="igroup">
+                   <option >Select Item Group</option>
+                   {% for i in item %}
+                   <option value="{{i.id}}">{{i.itemgroup}}</option>          
+                   {% endfor %}
+                   <!-- <option>Gold</option>
+                   <option>Diamond</option>
+                   <option>Platinum</option> -->
+                </select>
+             </div> 
+             <div class="form-group">
+                <label for="cname">Item Name:</label>
+                <input type="text" class="form-control" id="item" placeholder="Item Name">
+             </div> 
+             <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="additem()">Submit</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
+</div>
+</div><br>
+<!-- Customer History -->
+<div class="container-fluid">
+<div class="row">
+ <div class="col-lg-6">
+    <div class="iq-card">
+       <div class="iq-card-header d-flex justify-content-between">
+          <div class="iq-header-title">
+             <h4 class="card-title">Item Group</h4>
+          </div>
+       </div>
+       <div class="iq-card-body">
+          <table class="table table-bordered table-responsive-md table-striped text-center dataTable"  >
+             <thead>
+               <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                  
+                </tr>
+             </thead>
+             <tbody id="table">
+
+             </tbody>
+          </table>
+       </div>
+    </div>
+ </div>
+ <div class="col-lg-6">
+    <div class="iq-card">
+       <div class="iq-card-header d-flex justify-content-between">
+          <div class="iq-header-title">
+             <h4 class="card-title">Item Name</h4>
+          </div>
+       </div>
+       <div class="iq-card-body">
+          <table class="table table-bordered table-responsive-md table-striped text-center dataTable" >
+             <thead>
+               <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Action</th>
+                  
+                </tr>
+                
+             </thead>
+             <tbody id="table1">
+
+             </tbody>
+          </table>
+       </div>
+    </div>
+ </div>
+</div>
+</div>
+<script>
+   function additemgroup(){
+      
+       $.ajaxSetup({
+headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+$.ajax({
+   url: '/adminapp/itemgroup/',
+   method:'POST',
+   data:{
+       igroup: $('#igroup').val()
+   },
+   success: function(response){
+    alert(response.msg)
+     location.reload(true)
+   }
+})
+   }
+
+   function additem(){
+      
+      $.ajaxSetup({
+headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+$.ajax({
+  url: '/adminapp/items/',
+  method:'POST',
+  data:{
+      igroup:$('#igroup').val(),
+      item: $('#item').val()
+  },
+  success: function(response){
+  
+   alert(response.msg)
+    location.reload(true)
+  }
+})
+  }
+  function loaditemgroup(){ 
+       $.ajax({
+           url:'/adminapp/loadigroup/',
+           type: 'GET',
+           success: function(response){
+               $('.tr').remove()
+               for(i=0;i<response.igroup.length;i++){
+                $('#table').append("<tr ><td>"+response.igroup[i].id+"</td><td>"+response.igroup[i].name+"</td><td><a href='#' onclick='deligroup("+response.igroup[i].id+")' class='btn iq-bg-danger btn-rounded btn-sm my-0'><i class='fa fa-trash'></i></a></td></tr>")
+               }
+           }
+       })  
+   }
+   function loaditems(){ 
+       $.ajax({
+           url:'/adminapp/loaditems/',
+           type: 'GET',
+           success: function(response){    
+               $('.tr').remove()
+               for(i=0;i<response.item.length;i++){
+                $('#table1').append("<tr ><td>"+response.item[i].id+"</td><td>"+response.item[i].name+"</td><td><a href='#' onclick='deldata("+response.item[i].id+")' class='btn iq-bg-danger btn-rounded btn-sm my-0'><i class='fa fa-trash'></i></a></td></tr>")
+               }
+           }
+       })  
+   }
+   function deligroup(id){
+      
+    $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+            $.ajax({
+                url:'/adminapp/deligroup/',
+                type: 'POST',
+                data:{
+                    id:id
+                },
+                success: function(response){
+                    alert(response.msg)
+                    loaddata()
+                }
+            })
+        }
+        function deldata(id){
+      
+    $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+            $.ajax({
+                url:'/adminapp/delitem/',
+                type: 'POST',
+                data:{
+                    id:id
+                },
+                success: function(response){
+                    alert(response.msg)
+                    loaddata()
+                }
+            })
+        }
+</script>
+{% endblock %}

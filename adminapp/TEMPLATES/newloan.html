@@ -1,0 +1,406 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<link href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+<script>
+   window.onload=function(){
+       loadigroup()
+   }
+    
+</script>
+<div class="container-fluid">
+   <div class="row">                  
+      <div class="col-lg-12">
+         <div class="iq-card">
+            <div class="iq-card-header d-flex justify-content-between">
+               <div class="iq-header-title">
+                  <h4 class="card-title">New Loan</h4>
+               </div>
+            </div>
+            <div class="iq-card-body">
+               <div class="new-user-info">
+                  <form>
+                     <div class="row">
+                        <div class="form-group col-md-4">
+                           <label for="mobno">Loan Date :</label>
+                           <input type="date" class="form-control" id="ldate" placeholder="dd-mm-yy">
+                        </div>
+                        <!-- <div class="form-group col-md-3">
+                           <label for="lname">Loan Number :</label>
+                           <input type="text" class="form-control" id="lname" placeholder="Number">
+                        </div> -->
+                        <div class="form-group col-md-4">
+                           <label for="lname">Customer Id :</label>
+                           <input type="text" class="form-control" id="id" placeholder="Customer Id">
+                        </div>
+                        <div class="form-group col-md-4">
+                           <label for="lname">Customer Name :</label>
+                           <input type="text" class="form-control" id="name" placeholder="Customer Name">
+                        </div> 
+                        <div class="form-group col-md-3">
+                           <label for="lname">Phone Number :</label>
+                           <input type="text" class="form-control" id="mobile" placeholder="Mobile Number">
+                        </div> 
+                        <div class="form-group col-md-3">
+                           <label for="lname">Email ID :</label>
+                           <input type="text" class="form-control" id="email" placeholder="email id">
+                        </div>                                     
+                        <div class="form-group col-md-6">
+                           <label for="add1">Address :</label>
+                           <input type="text" class="form-control" id="address" placeholder="Street Address 1">
+                        </div>                                    
+                        <div class="form-group col-md-3">
+                           <label for="cname">City:</label>
+                           <input type="text" class="form-control" id="city" placeholder="City Name">
+                        </div>
+                        <div class="form-group col-md-3">
+                           <label for="cname">State:</label>
+                           <input type="text" class="form-control" id="state" placeholder="State">
+                        </div>
+                        <div class="form-group col-md-3">
+                           <label for="cname">Country:</label>
+                           <input type="text" class="form-control" id="country" placeholder="State">
+                        </div>
+                        <!-- <div class="form-group col-sm-3">
+                           <label>Country:</label>
+                           <select class="form-control" id="selectcountry">
+                              <option>Select Country</option>
+                              <option>India</option>
+                              <option>England</option>
+                              <option >USA</option>
+                              <option>Canada</option>
+                              <option>Africa</option>
+                           </select>
+                        </div> -->
+                        <div class="form-group col-md-3">
+                           <label for="cname">Pincode:</label>
+                           <input type="text" class="form-control" id="pincode" placeholder="Area Code">
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
+         <div class="iq-card">
+            <div class="iq-card-body">
+               <table class="table table-bordered table-responsive-md table-striped text-center dataTable" id="table">
+                  <thead>
+                     <tr>
+                       <th>Item Group</th>
+                       <th>Item Name</th>
+                       <th>Qty</th>
+                       <th>Gross Wt</th>
+                       <th>Net Wt</th>
+                       <th>Purity</th>
+                       <th>Value</th>
+                       <th>Remarks</th>
+                       <th><a href="#" onclick="addRow()" class="btn iq-bg-success btn-rounded btn-sm my-0"><i class="fa fa-plus"></i></a></th>
+                     </tr>
+                     <tbody class="tbody">
+
+                     </tbody>
+                     <tfoot class="tfoot" id="tfoot" style="text-align: center;">
+                        <tr>
+                          <td><h6 style="font-weight: bold;">Total</h6></td>
+                          <td></td>
+                          <td id="qty"></td>
+                          <td id="gwt"></td>
+                          <td id="nwt"></td>
+                          <td></td>
+                          <td id="amount"></td>
+                          <td></td>
+                          <td><button class="btn btn-primary btn-block"  onclick="values()">Calculate</button></td>
+                        </tr>
+                      </tfoot>
+                     <!-- <tr>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><input type="text" class="form-control" id="cname" placeholder=""></td>
+                       <td><a href="#" class="btn iq-bg-success btn-rounded btn-sm my-0"><i class="fa fa-trash"></i></a></td>
+                     </tr> -->
+                  </thead>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
+         <div class="iq-card">
+            <div class="iq-card-header d-flex justify-content-between">
+               <div class="iq-header-title">
+                  <h4 class="card-title">Loan Details</h4>
+               </div>
+            </div>
+            <div class="iq-card-body">
+               <div class="new-user-info">
+                  <form>
+                     <div class="row">
+                        <div class="form-group col-md-3">
+                           <label for="mobno">Loan Amount :</label>
+                           <input type="calender" class="form-control" id="lamount" placeholder="Amount">
+                        </div>
+                        <div class="form-group col-md-3">
+                           <label for="lname">Interest Rate :</label>
+                           <input type="text" class="form-control" id="irate" placeholder="%">
+                        </div>
+                        <div class="form-group col-md-3">
+                           <label for="lname">Advance Paid :</label>
+                           <input type="text" class="form-control" id="apaid" placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
+                           <label for="lname">Processing Fee :</label>
+                           <input type="text" class="form-control" id="fee" placeholder="">
+                        </div> 
+                        <div class="form-group col-md-3">
+                           <label for="lname">No.of Installments :</label>
+                           <input type="text" class="form-control" id="installment" placeholder="">
+                        </div> 
+                        <div class="form-group col-md-3">
+                           <label for="lname">Net Payable :</label>
+                           <input type="text" class="form-control" id="netpayable" placeholder="">
+                        </div>                                     
+                        <div class="form-group col-md-3">
+                           <label for="add1">Maturing Date :</label>
+                           <input type="text" class="form-control" id="mdate" placeholder="">
+                        </div>                                    
+                        <div class="form-group col-md-3">
+                           <label for="cname">Payment Mode :</label>
+                           <select class="form-control" id="pmode" >
+                              <option>Choose Payment Mode</option>
+                              <option>Cash</option>
+                              <option>Card</option>
+                              <option>Internet Banking</option>
+                              <option >UPI/option>
+                           </select>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+     
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+         <div class="form-group">
+           <button type="button" class="btn btn-primary btn-block" onclick="loadValues()">Create</button>
+         </div>
+      </div>
+      <div class="col-lg-4"></div>
+   </div>
+</div>
+<script>
+
+function addRow() {
+   var no_rows = 0;
+   var row;
+   row = "<tr><td id='td0'>"+"<input type=text class='form-control' id='igroup' size='10' style='text'></input>"+"</td><td id='td1'>"+"<input type=text class='form-control'id='iname' size='10' style='text'></input>"+"</td><td id='td2'>" + "<input type=text id='qtys' class='form-control' size='10'></input>" + "</td><td id='td3'>" + "<input type=text id='grosswt' class='form-control' size='10'></input>" + "</td><td id='td4'>" + "<input type=text id='netwt' class='form-control' size='10'></input>" + "</td><td id='td5'>" + "<input type=text id='purity' class='form-control' size='10'></input>" + "</td><td id='td6'>" + "<input type=text class='form-control' id='values'  'size='10'></input>" + "</td><td id='td7'>"+"<input type=text id='remark' class='form-control' size='10'></input>"+"</td><td>"+"<a href='#' class='btn iq-bg-success btn-rounded btn-sm my-0'><i class='fa fa-trash'></i></a>"+"</td></tr>";
+   $("table > tbody").append(row);
+
+   $("#igroup").autocomplete({ 
+         source: '/adminapp/suggestitemgroup/',
+         minLength: 2,
+    
+   });
+
+  $("#iname").autocomplete({ 
+         source: '/adminapp/suggestitemname/',
+         minLength: 2,
+    
+   });
+ }
+$(function () {
+  
+    $("#name").autocomplete({ 
+      source: '/adminapp/suggestname/',
+      minLength: 2,
+      
+    });
+  });
+
+
+function loadigroup(){
+   $.ajax({
+            url:'/adminapp/loaditemgroup/',
+            type:'GET',
+            success: function(response){
+                $('.tr').remove()
+                for(i=0;i<response.igroup.length;i++){
+                  $('#igroup').append('<option value='+response.igroup[i].id+'>'+response.igroup[i].name+'</option>')
+                }
+            }
+        })
+}
+  $('#name').change(function(){
+        
+        $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+        $.ajax({
+            url:'/adminapp/getcustomerdetail/',
+            type:'POST',
+            data:{
+                fname:$('#name').val(),
+                
+            },
+            success: function(response){   
+                $('#id').val(response.user[0].id)
+                $('#email').val(response.user[0].email)
+                $('#mobile').val(response.user[0].mobile)
+                $('#address').val(response.user[0].address)
+                $('#city').val(response.user[0].city)
+                $('#state').val(response.user[0].state)
+                $('#country').val(response.user[0].country)
+                $('#pincode').val(response.user[0].pincode)
+               
+            }
+        })
+    }
+    )
+    
+    function loadValues() {
+      var mainArr = [];
+      var tmpArr = [];
+  var mainTable = $('#table');
+  var tr = mainTable.find('tbody tr');
+  tr.each(function() {
+    valArr = []; 
+    qtyArr=[];
+    gwtArr=[];
+    nwtArr=[];
+    nameArr=[];
+    purArr=[];
+    remArr=[];
+    tmpArr = []; 
+    $(this).find('td').each(function() {
+
+      var values = $(this).find('input').val();
+      tmpArr.push(values);
+
+    });
+    mainArr.push(tmpArr);
+  });
+
+console.log(mainArr)
+  $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+        $.ajax({
+            url:'/adminapp/loadvalues/',
+            type:'POST',
+            data:{
+                name: JSON.stringify(mainArr),
+                ldate: $('#ldate').val(),
+                customerid: $('#id').val(),
+                customername: $('#name').val(),
+                mobile:$('#mobile').val(),
+                qty:$('#qty').html(),
+                gwt:$('#gwt').html(),
+                nwt:$('#nwt').html(),
+                amount:$('#amount').html(),
+                lamount:$('#lamount').val(),
+                irate:$('#irate').val(),
+                apaid:$('#apaid').val(),
+                fee:$('#fee').val(),
+                installment:$('#installment').val(),
+                npay:$('#netpayable').val(),
+                mdate:$('#mdate').val(),
+                pmode:$('#pmode').val(),
+                
+            },
+            success: function(response){   
+                alert(response.msg)
+                location.reload(true)
+            }
+        })
+}
+
+
+function values(){
+   var value =[];
+   var valArr= [];
+   var qty =[];
+   var qtyArr= [];
+   var gwt=[]
+   var gwtArr=[]
+   var nwt=[]
+   var nwtArr=[]
+   var mainTable = $('#table');
+  var tr = mainTable.find('tbody tr');
+  tr.each(function() {
+    valArr = []; 
+    qtyArr=[];
+    gwtArr=[];
+    nwtArr=[];
+    sum=0;
+    $(this).find('#td6').each(function() {
+      var values = $(this).find('#values').val();
+      valArr.push(values);
+    });
+    value.push(valArr);
+
+    $(this).find('#td2').each(function() {
+    var qtys = $(this).find('#qtys').val();
+    qtyArr.push(qtys);
+     });
+      qty.push(qtyArr);
+
+      $(this).find('#td3').each(function() {
+      var gwts = $(this).find('#grosswt').val();
+       gwtArr.push(gwts);
+ });
+  gwt.push(gwtArr);  
+
+  $(this).find('#td4').each(function() {
+      var nwts = $(this).find('#netwt').val();
+       nwtArr.push(nwts);
+ });
+  nwt.push(nwtArr);
+  });
+  console.log(value);
+  console.log(qty);
+  console.log(gwt);
+  console.log(nwt);
+  var sum=0;
+  
+  for (i=0; i<value.length; i++) {
+  sum += Number(value[i]);
+}
+
+// alert(sum)
+var quat=0;
+  
+  for (i=0; i<qty.length; i++) {
+  quat += Number(qty[i]);
+}
+var gross=0;
+  
+  for (i=0; i<gwt.length; i++) {
+  gross += Number(gwt[i]);
+}
+var net=0;
+  
+  for (i=0; i<nwt.length; i++) {
+  net += Number(nwt[i]);
+}
+
+document.getElementById("qty").innerHTML= quat;
+document.getElementById("gwt").innerHTML= gross;
+document.getElementById("nwt").innerHTML= net;
+document.getElementById("amount").innerHTML= sum;
+
+}
+
+
+</script>
+
+
+{% endblock %}

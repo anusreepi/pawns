@@ -1,0 +1,180 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">                  
+       <div class="col-lg-12">
+          <div class="iq-card">
+             <div class="iq-card-header d-flex justify-content-between">
+                <div class="iq-header-title">
+                   <h4 class="card-title">Pay Interest</h4>
+                </div>
+             </div>
+             <div class="iq-card-body">
+                <div class="new-user-info">
+                   <form>
+                      <div class="row">                                    
+                         <div class="form-group col-md-2">
+                            <label for="lname">Loan Number :</label>
+                            <input type="text" class="form-control" id="lnum" placeholder="Number">
+                         </div>
+                         <div class="form-group col-md-2">
+                            <label for="lname">Customer Id :</label>
+                            <input type="text" class="form-control" id="cid" placeholder="Customer Id">
+                         </div>
+                         <div class="form-group col-md-3">
+                            <label for="lname">Customer Name :</label>
+                            <input type="text" class="form-control" id="name" placeholder="Customer Name">
+                         </div> 
+                         <div class="form-group col-md-3">
+                            <label for="lname">Phone Number :</label>
+                            <input type="text" class="form-control" id="mobile" placeholder="Mobile Number">
+                         </div> 
+                         <div class="form-group col-md-2" style="margin-top: 35px;">
+                           <button type="button" class="btn btn-primary btn-block" onclick="search()">Search</button>
+                         </div>
+                         <div class="form-group col-md-2">
+                            <label for="lname">Interest Start From :</label>  
+                            <input type="text" class="form-control" id="sfrom" placeholder="dd/mm/yy">
+                         </div>
+                         <div class="form-group col-md-3">
+                            <label for="lname">Interest Covered Till :</label>
+                            <input type="text" class="form-control" id="till" placeholder="dd/mm/yy">
+                         </div>
+                         <div class="form-group col-md-2">
+                            <label for="lname">No of Months :</label>
+                            <input type="text" class="form-control" id="months" placeholder="0">
+                         </div> 
+                         <div class="form-group col-md-3">
+                            <label for="lname">Total Interest Amount :</label>
+                            <input type="text" class="form-control" id="total" placeholder="Amount">
+                         </div> 
+                         <div class="form-group col-md-2" style="margin-top: 35px;">
+                           <button type="button" class="btn btn-primary btn-block" onclick="payinterest()">Pay Interest</button>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+       
+       <!-- <div class="col-lg-6">
+          <div class="iq-card">
+             <div class="iq-card-header d-flex justify-content-between">
+                <div class="iq-header-title">
+                   <h4 class="card-title">Loan Summary</h4>
+                </div>
+             </div>
+             <div class="iq-card-body">
+                <div class="about-info m-0 p-0">
+                   <div class="row">
+                      <div class="col-4">Customer Name:</div>
+                      <div class="col-8" id="cname"></div>
+                      
+                      <div class="col-4">Loan No:</div>
+                      <div class="col-8" id="lno">156</div>                                 
+                      <div class="col-4">Phone Number:</div>
+                      <div class="col-8" id="mobile">9562314523</div>
+                      <div class="col-4">Email:</div>
+                      <div class="col-8"><a href="#"> anu@techtist.com </a></div>
+                      <div class="col-4">Address:</div>
+                      <div class="col-8">37 Cardinal Lane
+                         Petersburg, VA 23803
+                         California
+                         United States of America
+                         Zip Code: 85001
+                      </div> 
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div> 
+       <div class="col-lg-6">
+          <div class="iq-card">
+             <div class="iq-card-body">
+                <div class="about-info m-0 p-0">
+                   <div class="row">
+                       <div class="col-4">Item Name:</div>
+                      <div class="col-8">Ring</div>
+                      <div class="col-4">Item Type:</div>
+                      <div class="col-8">Gold</div> -->
+                      <!-- <div class="col-4">Loan Date:</div>
+                      <div class="col-8" id="ldate">01/01/2020</div>
+                      <div class="col-4">Loan Amount:</div>
+                      <div class="col-8" id="lamount">42000</div>
+                      <div class="col-4">Interest Rate:</div>
+                      <div class="col-8" id="interest">10%</div>
+                      <div class="col-4" >Advance Paid:</div>
+                      <div class="col-8"id="apaid">3000</div>
+                      <div class="col-4">Processing Fee:</div>
+                      <div class="col-8" id="pfee">750</div>
+                      <div class="col-4">No.of Installments</div>
+                      <div class="col-8" id="month">12</div>
+                      <div class="col-4">Maturing Date:</div>
+                      <div class="col-8" id="mdate">31/12/2022</div>
+                   </div>
+                </div>
+             </div>
+          </div> 
+       </div> -->
+       <script>
+          $(function () {
+  
+  $("#name").autocomplete({ 
+    source: '/adminapp/suggestcustomername/',
+    minLength: 2,
+    
+  });
+});
+function search(){
+        $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+        $.ajax({
+            url:'/adminapp/customerdetails/',
+            type:'POST',
+            data:{
+                fname:$('#name').val(),  
+                lnum:$('#lnum').val()  
+            },
+            success: function(response){   
+                
+                $('#cid').val(response.user[0].cid)
+                $('#mobile').val(response.user[0].mobile)
+                $('#sfrom').val(response.user[0].sfrom)
+                
+               
+            }
+        })
+    }
+    
+    function payinterest(){
+      $.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+$.ajax({
+            url:'/adminapp/payinterest/',
+            type:'POST',
+            data:{
+                fname:$('#name').val(),  
+                lnum:$('#lnum').val(),
+                cid:$('#cid').val(),
+                mobile:$('#mobile').val(),
+                sfrom:$('#sfrom').val(),
+                till:$('#till').val(),
+                months:$('#months').val(),
+                total:$('#total').val()
+
+            },
+            success: function(response){   
+                alert(response.msg)
+               //  $('#user').html(response.user)
+                location.reload(true)
+                
+               
+            }
+        })
+    }
+       </script>
+{% endblock %}

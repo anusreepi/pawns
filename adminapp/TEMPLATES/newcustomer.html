@@ -1,0 +1,167 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<div class="col-lg-12" style="padding-top: 50px;">
+   <div class="iq-card">
+      <div class="iq-card-header d-flex justify-content-between">
+         <div class="iq-header-title">
+            <h4 class="card-title">Customer Information</h4>
+         </div>
+      </div>
+      <div class="iq-card-body">
+         <div class="new-user-info">
+            <form>
+               <div class="row">
+                  <div class="form-group col-md-3">
+                     <label for="fname">First Name:</label>
+                     <input type="text" class="form-control" id="fname" placeholder="First Name">
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="lname">Last Name:</label>
+                     <input type="text" class="form-control" id="lname" placeholder="Last Name">
+                  </div>
+                  <div class="form-group col-sm-3">
+                     <label>Gender:</label>
+                     <select class="form-control" id="gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Others</option>
+                     </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="exampleInputdate">Date of Birth</label>
+                     <input type="date" class="form-control" id="dob" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="mobno">Mobile Number:</label>
+                     <input type="text" class="form-control" id="mobile" placeholder="Mobile Number">
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="email">Email:</label>
+                     <input type="email" class="form-control" id="email" placeholder="Email">
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="cname">Father's Name:</label>
+                     <input type="text" class="form-control" id="faname" placeholder="Father's Name">
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="mobno">Contact Number:</label>
+                     <input type="text" class="form-control" id="contact" placeholder="Contact Number">
+                  </div>  
+                  <!-- <div class="form-group col-md-3">
+                     <label for="exampleFormControlFile1">Upload Photo</label>
+                     <input type="file" class="form-control-file" id="photo">
+                  </div>  -->
+                  <div class="form-group col-md-3" >
+                     <label  for="customFile">Photo:</label>
+                     <div class="custom-file" >
+                        <label class="custom-file-label" for="customFile">Photo</label>
+                        <input type="file" class="custom-file-input" id="photo">
+                        
+                     </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="exampleFormControlFile1">ID Proof</label>
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="idproof">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                     </div>
+                  </div>                          
+                  <!-- <div class="form-group col-md-3">
+                     <label for="exampleFormControlFile1">Id Proof</label>
+                     <input type="file" class="form-control-file" id="idproof">
+                  </div>  -->
+               </div> 
+               <br>                                 
+               <h4 class="card-title">Contact Information</h4>
+               <hr> 
+               <div class="row">
+                  <div class="form-group col-md-4">
+                     <label for="add1">Street Address 1:</label>
+                     <input type="text" class="form-control" id="add1" placeholder="Street Address 1">
+                  </div>
+                  <div class="form-group col-md-4">
+                     <label for="add2">Street Address 2:</label>
+                     <input type="text" class="form-control" id="add2" placeholder="Street Address 2">
+                  </div>
+                  <div class="form-group col-md-4">
+                     <label for="cname">City:</label>
+                     <input type="text" class="form-control" id="city" placeholder="City Name">
+                  </div>
+                  <div class="form-group col-md-4">
+                     <label for="cname">State:</label>
+                     <input type="text" class="form-control" id="state" placeholder="State">
+                  </div>
+                  <div class="form-group col-md-4">
+                     <label for="cname">Pincode:</label>
+                     <input type="text" class="form-control" id="pincode" placeholder="Area Code">
+                  </div>
+                  <div class="form-group col-sm-4">
+                     <label>Country:</label>
+                     <select class="form-control" id="country">
+                        <option>Select Country</option>
+                        <option>India</option>
+                        <option>England</option>
+                        <option >USA</option>
+                        <option>Canada</option>
+                        <option>Africa</option>
+                     </select>
+                  </div>
+               </div> 
+               
+                                            
+               <div class="row">
+                  <div class="form-group col-md-12">
+                     <button type="button" class="btn btn-primary" onclick="add()">Add Customer</button>
+                  </div>
+               </div>
+               
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+
+<script>
+     function add(){
+           
+           $.ajaxSetup({
+ headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
+var data= new FormData()
+  
+  data.append("photo",$("input[id^='photo']")[0].files[0]);
+  data.append("idproof",$("input[id^='idproof']")[0].files[0]);
+  data.append("name",$('#fname').val());
+  data.append("lname",$('#lname').val());
+  data.append("email",$('#email').val());
+  data.append("fname",$('#faname').val());
+  data.append("add1",$('#add1').val());
+  data.append("add2",$('#add2').val());
+  data.append("city",$('#city').val());
+  data.append("state",$('#state').val());
+  data.append("country",$('#country').val());
+  data.append("pincode",$('#pincode').val());
+  data.append("mobile",$('#mobile').val());
+  data.append("fmobile",$('#contact').val());
+  data.append("dob",$('#dob').val());
+  data.append("gender",$('#gender').val());
+//   data.append("gender",$("input[name='gender']").val());
+           $.ajax({
+               url:'/adminapp/fnuser/',
+               type:'POST',
+               enctype: 'multipart/form-data',
+               contentType: false,
+               processData: false,
+               data:data,
+               success:function(response){
+                 alert(response.msg)
+                 location.reload(true)
+               }
+           })
+       }
+</script>
+{% endblock %}

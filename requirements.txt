@@ -1,0 +1,9 @@
+asgiref
+backports.zoneinfo
+dj-database-url
+Django==3.2.23
+gunicorn
+psycopg2-binary
+sqlparse
+whitenoise
+backports.zoneinfo;python_version<"3.9"

@@ -1,0 +1,61 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<script>
+   window.onload=function(){
+       
+       loadloan()
+   }
+</script>
+<div class="div" style="padding-top: 90px;" >
+    <div class="row">
+                  
+        <div class="col-lg-12">
+           <div class="iq-card">
+              <div class="iq-card-header d-flex justify-content-between">
+                 <div class="iq-header-title">
+                    <h4 class="card-title">Loan History</h4>
+                 </div>
+              </div>
+              <div class="iq-card-body">
+                 <table class="table table-bordered table-responsive-md table-striped text-center dataTable" id="table">
+                    <thead>
+                       <tr>
+                         <th>S.No</th>
+                         <th>Loan No</th>
+                         <th>Loan Date</th>
+                         <th>Customer Name</th>
+                         <th>Interest</th>
+                         <th>Gross wt</th>
+                         <th>Net wt</th>
+                         <th>Market Value</th>
+                         <th>Loan Amount</th>
+                         <th>Advance Paid</th>
+                         <th>Doc Fees</th>
+                         <th>Net Amount</th>
+                         <th>Maturity Date</th>
+                       </tr>
+                       
+                      
+                    </thead>
+                 </table>
+              </div>
+           </div>
+        </div>
+     </div>
+</div>
+<script>
+   function loadloan(){ 
+       $.ajax({
+           url:'/adminapp/loadloan/',
+           type: 'GET',
+           success: function(response){
+               $('.tr').remove()
+               for(i=0;i<response.loan.length;i++){
+                $('#table').append("<tr ><td>"+response.loan[i].id+"</td><td>"+response.loan[i].lnum+"</td><td>"+response.loan[i].date+"</td><td>"+response.loan[i].name+"</td><td>"+response.loan[i].interest+"</td><td>"+response.loan[i].gwt+"</td><td>"+response.loan[i].nwt+"</td><td>"+response.loan[i].mvalue+"</td><td>"+response.loan[i].amount+"</td><td>"+response.loan[i].advance+"</td><td>"+response.loan[i].fees+"</td><td>"+response.loan[i].ntamount+"</td><<td>"+response.loan[i].mdate+"</td>/tr>")
+               }
+           }
+       })  
+   }
+</script>
+{% endblock %}
